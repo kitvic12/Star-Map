@@ -43,7 +43,7 @@ async function getISSPass() {
 
 async function getMoonPhase() {
     try {
-        const response = await fetch('https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/moscow/today?unitGroup=metric&include=days&key=YOUR_API_KEY&elements=moonphase');
+        const response = await fetch('https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/moscow/today?unitGroup=metric&include=days&key=U956GEK45H6BBB3HYKPD7P5UA&elements=moonphase');
         const data = await response.json();
         
         if (data.days && data.days.length > 0) {
