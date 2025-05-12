@@ -1,12 +1,12 @@
 let date = new Date()
-month = date.getMonth() +1
+month = date.getMonth()
 
 
 const LUNAR_CYCLE = 29.530588853; 
 const KNOWN_NEW_MOON = new Date('2024-05-08T03:22Z'); 
 
 function get_day(){
-    getElementById('day').textContent = month
+    if (month = 0){getElementById('month').textContent = "Январь"}
 }
 
 
