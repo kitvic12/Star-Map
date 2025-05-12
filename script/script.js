@@ -6,7 +6,18 @@ const LUNAR_CYCLE = 29.530588853;
 const KNOWN_NEW_MOON = new Date('2024-05-08T03:22Z'); 
 
 function get_day(){
-    if (month = 0){document.getElementById('month').textContent = "Январь"}
+    if (month = 0){document.getElementById('month').textContent = "Январь"};
+    if (month = 1){document.getElementById('month').textContent = "Февраль"};
+    if (month = 2){document.getElementById('month').textContent = "Март"};
+    if (month = 3){document.getElementById('month').textContent = "Апрель"};
+    if (month = 4){document.getElementById('month').textContent = "Май"};
+    if (month = 5){document.getElementById('month').textContent = "Июнь"};
+    if (month = 6){document.getElementById('month').textContent = "Июль"};
+    if (month = 7){document.getElementById('month').textContent = "Август"};
+    if (month = 8){document.getElementById('month').textContent = "Сентябрь"};
+    if (month = 9){document.getElementById('month').textContent = "Октябрь"};
+    if (month = 10){document.getElementById('month').textContent = "Ноябрь"};
+    if (month = 11){document.getElementById('month').textContent = "Декабрь"};
 }
 
 
