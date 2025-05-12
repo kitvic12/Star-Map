@@ -6,7 +6,7 @@ const LUNAR_CYCLE = 29.530588853;
 const KNOWN_NEW_MOON = new Date('2024-05-08T03:22Z'); 
 
 function get_day(){
-    if (month = 0){getElementById('month').textContent = "Январь"}
+    if (month = 0){document.getElementById('month').textContent = "Январь"}
 }
 
 
