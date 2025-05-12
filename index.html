@@ -12,25 +12,22 @@
 
 <body>
     <h1>Космические события Москвы</h1>
-    
+
     <div class="container">
-        <h2>🛰️ Ближайший пролет МКС</h2>
-        <div id="iss-pass">
-            <p>Загружаем данные о пролете МКС...</p>
-        </div>
-    </div>
-    
-    <div class="container">
-        <h2>🌙 Фаза Луны сегодня</h2>
-        <div id="moon-phase">
-            <p>Загружаем данные о фазе Луны...</p>
-        </div>
-        <div class="moon-phase">
-            <div class="moon-img">
-                <div class="moon-shade" id="moon-shade"></div>
+        <h2>🌙 Фаза Луны</h2>
+        <div class="moon-container">
+            <div class="moon">
+                <div class="moon-circle">
+                    <div class="moon-light" id="moon-light"></div>
+                </div>
             </div>
-            <div id="moon-info"></div>
+            <div id="moon-info">
+                <p><strong>Текущая фаза:</strong> <span id="moon-phase-name" class="highlight"></span></p>
+                <p><strong>Освещённость:</strong> <span id="moon-illumination" class="highlight"></span>%</p>
+                <p><strong>Дата:</strong> <span id="current-date"></span></p>
+            </div>
         </div>
-    </div>
+
+    <div class="day"></div>
 </body>
 </html>

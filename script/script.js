@@ -1,88 +1,93 @@
 let date = new Date()
 month = date.getMonth() +1
 
-function get_date(){function get_date(){
-    let date = new Date()
-    month = date.getMonth() +1
-    return month
-}
-    let date = new Date()
-    month = date.getMonth() +1
-    return month
+
+const LUNAR_CYCLE = 29.530588853; 
+const KNOWN_NEW_MOON = new Date('2024-05-08T03:22Z'); 
+
+function get_day(){
+    getElementById('day').textContent = month
 }
 
 
+function calculateMoonPhase(date) {
+    const daysSinceKnown = (date - KNOWN_NEW_MOON) / (1000 * 60 * 60 * 24);
+    const currentPhase = (daysSinceKnown % LUNAR_CYCLE) / LUNAR_CYCLE;
+    let illumination;
+    if (currentPhase < 0.5) {
+        illumination = currentPhase * 2 * 100; 
+    } else {
+        illumination = (1 - (currentPhase - 0.5) * 2) * 100; 
+    }
+    
+    return {
+        phase: currentPhase,
+        illumination: Math.round(illumination),
+        age: daysSinceKnown % LUNAR_CYCLE
+    };
+}
 
-async function getISSPass() {
-    try {
-        const response = await fetch('https://api.wheretheiss.at/v1/satellites/25544/passes?lat=55.7558&lon=37.6176&n=1');
-        const data = await response.json();
+function getMoonPhaseName(phase, illumination) {
+    if (phase < 0.03 || phase > 0.97) return "Новолуние";
+    if (illumination > 98) return "Полнолуние";
+    if (phase < 0.25) return "Растущий серп";
+    if (phase < 0.28) return "Первая четверть";
+    if (phase < 0.5) return "Растущая луна";
+    if (phase < 0.72) return "Убывающая луна";
+    if (phase < 0.78) return "Последняя четверть";
+    return "Стареющий серп";
+}
+
+
+function getNextMoonPhases(currentDate) {
+    const phases = [
+        { name: "Новолуние", target: 0 },
+        { name: "Первая четверть", target: 0.25 },
+        { name: "Полнолуние", target: 0.5 },
+        { name: "Последняя четверть", target: 0.75 }
+    ];
+    
+    const currentPhase = (currentDate - KNOWN_NEW_MOON) / (1000 * 60 * 60 * 24) / LUNAR_CYCLE % 1;
+    
+    return phases.map(p => {
+        let daysToPhase = (p.target - currentPhase) * LUNAR_CYCLE;
+        if (daysToPhase < 0) daysToPhase += LUNAR_CYCLE;
         
-        if (data.passes && data.passes.length > 0) {
-            const pass = data.passes[0];
-            const riseTime = new Date(pass.rise_time * 1000);
-            const duration = Math.floor(pass.duration / 60);
-            
-            document.getElementById('iss-pass').innerHTML = `
-                <p><strong>Дата:</strong> ${riseTime.toLocaleDateString('ru-RU')}</p>
-                <p><strong>Время:</strong> ${riseTime.toLocaleTimeString('ru-RU')}</p>
-                <p><strong>Длительность:</strong> ${duration} минут</p>
-                <p><strong>Максимальная высота:</strong> ${pass.max_elevation}° над горизонтом</p>
-            `;
-        } else {
-            document.getElementById('iss-pass').innerHTML = 
-                "<p>Нет данных о ближайших пролетах МКС</p>";
-        }
-    } catch (error) {
-        document.getElementById('iss-pass').innerHTML = 
-            "<p>Ошибка при загрузке данных о МКС</p>";
-        console.error("Ошибка:", error);
+        const phaseDate = new Date(currentDate.getTime() + daysToPhase * 24 * 60 * 60 * 1000);
+        return {
+            name: p.name,
+            date: phaseDate,
+            daysTo: Math.round(daysToPhase * 10) / 10
+        };
+    }).sort((a, b) => a.daysTo - b.daysTo);
+}
+
+function updateMoonVisualization(illumination, phase) {
+    const moonLight = document.getElementById('moon-light');
+    
+    if (phase < 0.5) {
+        const lightWidth = illumination;
+        moonLight.style.clipPath = `inset(0 0 0 ${100 - lightWidth}%)`;
+    } else {
+        const lightWidth = illumination;
+        moonLight.style.clipPath = `inset(0 ${100 - lightWidth}% 0 0)`;
     }
 }
 
-
-async function getMoonPhase() {
-    try {
-        const response = await fetch('https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/moscow/today?unitGroup=metric&include=days&key=U956GEK45H6BBB3HYKPD7P5UA&elements=moonphase');
-        const data = await response.json();
-        
-        if (data.days && data.days.length > 0) {
-            const moonPhase = data.days[0].moonphase;
-            const illumination = Math.round(moonPhase * 100);
-            
-            let phaseName;
-            if (moonPhase === 0 || moonPhase === 1) phaseName = "Новолуние";
-            else if (moonPhase < 0.25) phaseName = "Растущий серп";
-            else if (moonPhase === 0.25) phaseName = "Первая четверть";
-            else if (moonPhase < 0.5) phaseName = "Растущая луна";
-            else if (moonPhase === 0.5) phaseName = "Полнолуние";
-            else if (moonPhase < 0.75) phaseName = "Убывающая луна";
-            else if (moonPhase === 0.75) phaseName = "Последняя четверть";
-            else phaseName = "Стареющий серп";
-            
-
-            const moonShade = document.getElementById('moon-shade');
-            if (moonPhase <= 0.5) {
-                moonShade.style.clipPath = `inset(0 ${100 - (moonPhase * 200)}% 0 0)`;
-            } else {
-                moonShade.style.clipPath = `inset(0 0 0 ${100 - ((1 - moonPhase) * 200)}%)`;
-            }
-            
-            document.getElementById('moon-info').innerHTML = `
-                <p><strong>Фаза:</strong> ${phaseName}</p>
-                <p><strong>Освещено:</strong> ${illumination}%</p>
-                <p><strong>Дата:</strong> ${new Date().toLocaleDateString('ru-RU')}</p>
-            `;
-        }
-    } catch (error) {
-        document.getElementById('moon-phase').innerHTML = 
-            "<p>Ошибка при загрузке данных о Луне</p>";
-        console.error("Ошибка:", error);
-    }
-}
+function updateMoonInfo() {
+    const now = new Date();
+    const moonData = calculateMoonPhase(now);
+    const phaseName = getMoonPhaseName(moonData.phase, moonData.illumination);
+    const nextPhases = getNextMoonPhases(now);
+    document.getElementById('current-date').textContent = 
+        now.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+    document.getElementById('moon-phase-name').textContent = phaseName;
+    document.getElementById('moon-illumination').textContent = moonData.illumination;
+    updateMoonVisualization(moonData.illumination, moonData.phase)}
 
 
 window.onload = function() {
-    getISSPass();
-    getMoonPhase();
-};
+    updateMoonInfo();
+    // getISSPasses();
+    get_day()
+}
