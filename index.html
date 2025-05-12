@@ -10,29 +10,27 @@
     <script src="./script/script.js" defer></script>
 </head>
 
-<div class="container">
-    <h1>Космос над Москвой</h1>
+<body>
+    <h1>Космические события Москвы</h1>
     
-
-    <section class="iss-tracker">
-      <h2>🛰️ Международная космическая станция</h2>
-      <div id="iss-info">
-        <p>Загрузка данных...</p>
-      </div>
-      <div id="iss-map" style="height: 300px; margin-top: 20px;"></div>
-    </section>
-
-
-    <section class="moon-phase">
-      <h2>🌙 Фаза Луны сегодня</h2>
-      <div id="moon-info">
-        <p>Загрузка данных...</p>
-      </div>
-      <div id="moon-visual" style="width: 100px; height: 100px; margin: 20px auto;"></div>
-    </section>
-  </div>
-
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="script.js"></script>
+    <div class="container">
+        <h2>🛰️ Ближайший пролет МКС</h2>
+        <div id="iss-pass">
+            <p>Загружаем данные о пролете МКС...</p>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h2>🌙 Фаза Луны сегодня</h2>
+        <div id="moon-phase">
+            <p>Загружаем данные о фазе Луны...</p>
+        </div>
+        <div class="moon-phase">
+            <div class="moon-img">
+                <div class="moon-shade" id="moon-shade"></div>
+            </div>
+            <div id="moon-info"></div>
+        </div>
+    </div>
 </body>
 </html>

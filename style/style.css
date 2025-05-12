@@ -1,33 +1,42 @@
 body {
     font-family: Arial, sans-serif;
-    background: #0a0a1a;
-    color: #fff;
-    margin: 0;
-    padding: 20px;
-  }
-  
-  .container {
     max-width: 800px;
     margin: 0 auto;
-  }
-  
-  h1, h2 {
-    color: #4fc3f7;
-  }
-  
-  .iss-tracker, .moon-phase {
-    background: #1a1a3a;
+    padding: 20px;
+    background-color: #0f0f1f;
+    color: #fff;
+}
+.container {
+    background-color: #1a1a3a;
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
-  }
-  
-  #iss-map {
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  
-  #moon-visual {
-    background: #1a1a3a;
+}
+h1 {
+    color: #4fc3f7;
+    text-align: center;
+}
+h2 {
+    color: #a5d6a7;
+}
+.moon-phase {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 15px;
+}
+.moon-img {
+    width: 100px;
+    height: 100px;
+    background-color: #f5f5dc;
     border-radius: 50%;
-  }
+    position: relative;
+    overflow: hidden;
+}
+.moon-shade {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #1a1a3a;
+    border-radius: 50%;
+}
