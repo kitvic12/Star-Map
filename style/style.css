@@ -19,24 +19,43 @@ h1 {
 h2 {
     color: #a5d6a7;
 }
-.moon-phase {
+.moon-container {
     display: flex;
     align-items: center;
     gap: 20px;
     margin-top: 15px;
 }
-.moon-img {
-    width: 100px;
-    height: 100px;
-    background-color: #f5f5dc;
-    border-radius: 50%;
+.moon {
+    width: 150px;
+    height: 150px;
     position: relative;
-    overflow: hidden;
 }
-.moon-shade {
-    position: absolute;
+.moon-circle {
     width: 100%;
     height: 100%;
     background-color: #1a1a3a;
     border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+.moon-light {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #f5f5dc;
+    border-radius: 50%;
+}
+.pass-item {
+    background: #252545;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.moon-calendar {
+    margin-top: 20px;
+}
+.highlight {
+    color: #ffcc00;
+    font-weight: bold;
 }
